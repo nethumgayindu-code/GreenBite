@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>GreenBite — Feel Good, Live Better</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="GreenBite: healthy recipes, workouts, mindfulness and nutrition tips.">
+  <link rel="icon" href="assets/icons/logo.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./styles.css">
+  <meta name="theme-color" content="#22c55e">
+</head>
+<body>
+  <header>
+    <div class="container nav" role="navigation" aria-label="Primary">
+      <a class="brand" href="./index.html">
+        <img src="assets/icons/logo.svg" alt="">
+        <span>GreenBite</span>
+      </a>
+
+      <button class="hamburger" aria-label="Toggle Menu" aria-expanded="false">
+        <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <nav class="nav-links" id="menu">
+        <a href="./index.html" aria-current="page">Home</a>
+        <a href="./recipes.html">Recipes</a>
+        <a href="./calculator.html">Calculator</a>
+        <a href="./workout.html">Workout</a>
+        <a href="./mindfulness.html">Mindfulness</a>
+        <a href="./contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <h1>
+          <span id="rotating-text" style="transition:opacity .22s ease; display:inline-block"></span>
+        </h1>
+        <p class="lead">Nutrition, movement, and calm — simple habits that add up.</p>
+        <a class="btn" href="./recipes.html">Explore Recipes</a>
+        <a class="btn secondary" href="./calculator.html">Find Your Calories</a>
+      </div>
+    </section>
+
+    <!-- DAILY TIP -->
+    <section class="section">
+      <div class="container reveal">
+        <h2>Tip of the Day</h2>
+        <p class="lead" id="daily-tip">Loading…</p>
+      </div>
+    </section>
+
+    <!-- FEATURED CARDS -->
+    <section class="section">
+      <div class="container">
+        <h2 class="reveal">Start small</h2>
+        <div class="grid-3">
+          <article class="card reveal">
+            <svg width="44" height="44" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2v20M4 10h16" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <h3>Eat Seasonal</h3>
+            <p>Build your plate around veggies and whole foods first.</p>
+          </article>
+
+          <article class="card reveal">
+            <svg width="44" height="44" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" fill="none" stroke="#0ea5e9" stroke-width="2"/>
+              <path d="M8 12l2 2 6-6" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <h3>Move 30 Minutes</h3>
+            <p>Walk, stretch, or do a short bodyweight flow.</p>
+          </article>
+
+          <article class="card reveal">
+            <svg width="44" height="44" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 5c5 0 5 7 0 7s-5 7 0 7" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <h3>Breathe 4-7-8</h3>
+            <p>Inhale 4, hold 7, exhale 8 — repeat 4 times to reset.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="section">
+      <div class="container reveal">
+        <h2>Get one healthy nudge each week</h2>
+        <form id="newsletter-form" class="form-row" novalidate>
+          <label class="sr-only" for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required>
+          <button class="btn" type="submit">Subscribe</button>
+        </form>
+        <p class="lead" style="margin-top:.5rem">We’ll keep it short and useful.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <small>© <span id="year"></span> GreenBite</small>
+      <small>
+        <a href="./contact.html">Contact</a> ·
+        <a href="./mindfulness.html">Mindfulness</a> ·
+        <a href="./workout.html">Workout</a>
+      </small>
+    </div>
+  </footer>
+
+  <div class="toast" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="./utils.js"></script>
+  <script src="./scripts/home.js"></script>
+</body>
+</html>

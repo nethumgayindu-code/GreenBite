@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>GreenBite — Calorie & Macro Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Calculate your BMR, TDEE, and daily macro targets using simple inputs.">
+  <link rel="icon" href="assets/icons/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    /* section */
+    html,body{height:100%}
+    body{display:flex; min-height:100vh; flex-direction:column}
+    main{flex:1}
+
+    /* section */
+    .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:1rem }
+    @media (max-width:820px){ .grid-2{ grid-template-columns:1fr } }
+    .field{ display:flex; flex-direction:column; gap:.35rem }
+    .field input, .field select{
+      padding:.65rem .8rem; border-radius:12px; border:1px solid #cbd5e1; outline:none;
+    }
+    .field input:focus, .field select:focus{ border-color:var(--accent); box-shadow:0 0 0 4px rgba(14,165,233,.12) }
+    .inline{ display:flex; gap:.75rem; align-items:center; flex-wrap:wrap }
+    .results{ display:none; margin-top:1rem }
+    .stat{
+      background:var(--panel); border:1px solid #e2e8f0; border-radius:14px;
+      padding:1rem; box-shadow:var(--shadow);
+    }
+    .bars{ display:grid; gap:.65rem }
+    .bar{ height:12px; background:#e5e7eb; border-radius:999px; overflow:hidden; }
+    .bar > span{ display:block; height:100% }
+    .bar.carbs  > span{ background:#0ea5e9 }
+    .bar.protein> span{ background:#22c55e }
+    .bar.fat    > span{ background:#f59e0b }
+    .muted{ color:var(--muted) }
+    .unit-toggle{ display:flex; gap:.75rem; align-items:center; }
+    kbd{ background:#f1f5f9; border:1px solid #e2e8f0; border-radius:6px; padding:.1rem .35rem; font-family:ui-monospace, SFMono-Regular, Menlo, monospace; }
+  </style>
+</head>
+<body>
+  <!-- section -->
+  <header>
+    <div class="container nav" role="navigation" aria-label="Primary">
+      <a class="brand" href="./index.html">
+        <img src="assets/icons/logo.svg" alt="">
+        <span>GreenBite</span>
+      </a>
+
+      <button class="hamburger" aria-label="Toggle Menu" aria-expanded="false">
+        <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <nav class="nav-links" id="menu">
+        <a href="./index.html">Home</a>
+        <a href="./recipes.html">Recipes</a>
+        <a href="./calculator.html" aria-current="page">Calculator</a>
+        <a href="./workout.html">Workout</a>
+        <a href="./mindfulness.html">Mindfulness</a>
+        <a href="./contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- section -->
+  <main class="section">
+    <div class="container">
+      <h1 class="reveal">Calorie & Macro Calculator</h1>
+      <p class="lead reveal">We’ll estimate your BMR and daily calories (TDEE), then split into a simple <strong>50/20/30</strong> macro target.</p>
+
+      <form id="calc-form" class="stat reveal" novalidate>
+        <div class="grid-2">
+          <div class="field">
+            <label for="sex">Sex</label>
+            <select id="sex" required>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="age">Age (years)</label>
+            <input id="age" type="number" min="10" max="100" placeholder="e.g., 24" required>
+          </div>
+
+          <div class="field">
+            <label for="height">Height</label>
+            <div class="inline">
+              <input id="height" type="number" min="80" max="250" placeholder="170" required style="flex:1 0 160px">
+              <select id="heightUnit" aria-label="height unit">
+                <option value="cm" selected>cm</option>
+                <option value="in">in</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="weight">Weight</label>
+            <div class="inline">
+              <input id="weight" type="number" min="30" max="250" placeholder="65" required style="flex:1 0 160px">
+              <select id="weightUnit" aria-label="weight unit">
+                <option value="kg" selected>kg</option>
+                <option value="lb">lb</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="activity">Activity level</label>
+            <select id="activity" required>
+              <option value="1.2">Sedentary (little or no exercise)</option>
+              <option value="1.375">Lightly active (1–3 days/week)</option>
+              <option value="1.55" selected>Moderately active (3–5 days/week)</option>
+              <option value="1.725">Very active (6–7 days/week)</option>
+              <option value="1.9">Extra active (physical job or twice/day)</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="goal">Goal</label>
+            <select id="goal">
+              <option value="0">Maintain (TDEE)</option>
+              <option value="-250">Cut (−250 kcal)</option>
+              <option value="-500">Cut (−500 kcal)</option>
+              <option value="+250">Gain (+250 kcal)</option>
+              <option value="+500">Gain (+500 kcal)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="inline" style="margin-top:1rem">
+          <button class="btn" type="submit">Calculate</button>
+          <button class="btn secondary" type="button" id="reset">Reset</button>
+          <small class="muted">Shortcut: press <kbd>Enter</kbd> to calculate.</small>
+        </div>
+      </form>
+
+      <section id="results" class="results reveal">
+        <div class="grid-2">
+          <div class="stat">
+            <h2 style="margin:.2rem 0 0">Energy</h2>
+            <p class="muted" style="margin:.2rem 0 1rem">Based on Mifflin–St Jeor.</p>
+            <div><strong>BMR:</strong> <span id="bmr">—</span> kcal/day</div>
+            <div><strong>TDEE:</strong> <span id="tdee">—</span> kcal/day</div>
+            <div><strong>Target:</strong> <span id="target">—</span> kcal/day <span class="muted" id="targetNote"></span></div>
+          </div>
+
+          <div class="stat">
+            <h2 style="margin:.2rem 0 0">Macros (50/20/30)</h2>
+            <p class="muted" style="margin:.2rem 0 1rem">Carbs / Protein / Fat</p>
+
+            <div class="bars" aria-hidden="true" style="margin-bottom:.5rem">
+              <div class="bar carbs"><span id="barCarbs" style="width:50%"></span></div>
+              <div class="bar protein"><span id="barProtein" style="width:20%"></span></div>
+              <div class="bar fat"><span id="barFat" style="width:30%"></span></div>
+            </div>
+
+            <div><strong>Carbs:</strong> <span id="carbKcal">—</span> kcal · <span id="carbG">—</span> g</div>
+            <div><strong>Protein:</strong> <span id="protKcal">—</span> kcal · <span id="protG">—</span> g</div>
+            <div><strong>Fat:</strong> <span id="fatKcal">—</span> kcal · <span id="fatG">—</span> g</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- section -->
+  <footer>
+    <div class="container footer-grid">
+      <small>© <span id="year"></span> GreenBite</small>
+      <small><a href="./contact.html">Contact</a></small>
+    </div>
+  </footer>
+
+  <!-- section -->
+  <div class="toast" aria-live="polite" aria-atomic="true"></div>
+  <script src="./utils.js"></script>
+  <script src="./scripts/calculator.js"></script>
+</body>
+</html>

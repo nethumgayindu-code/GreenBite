@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>GreenBite — Contact Us</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Send us a message — feedback, questions, or ideas.">
+  <link rel="icon" href="assets/icons/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    /* section */
+    html,body{height:100%}
+    body{display:flex; min-height:100vh; flex-direction:column}
+    main{flex:1}
+
+    /* section */
+    .shell{display:grid; grid-template-columns: 1.1fr .9fr; gap:1rem}
+    @media (max-width: 900px){ .shell{grid-template-columns:1fr} }
+    .panel{background:var(--panel); border:1px solid #e2e8f0; border-radius:16px; padding:1rem; box-shadow:var(--shadow)}
+
+    /* section */
+    .row{display:grid; grid-template-columns: 1fr 260px; gap:.75rem}
+    @media (max-width:700px){ .row{grid-template-columns:1fr} }
+    .field{display:flex; flex-direction:column; gap:.35rem}
+    .field input, .field textarea{
+      padding:.65rem .8rem; border-radius:12px; border:1px solid #cbd5e1; outline:none; box-sizing:border-box;
+    }
+    /* section */
+    #name{height:44px; line-height:44px}
+    #email{height:44px !important; line-height:44px !important; resize:none !important; width:260px}
+    @media (max-width:700px){ #email{width:100%} }
+    textarea#email{height:44px !important; line-height:44px !important} /* safety if it was pasted as a textarea */
+    .field textarea{min-height:140px; resize:vertical}
+    .field input:focus, .field textarea:focus{border-color:var(--accent); box-shadow:0 0 0 4px rgba(14,165,233,.12)}
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+  <!-- section -->
+  <header>
+    <div class="container nav" role="navigation" aria-label="Primary">
+      <a class="brand" href="./index.html">
+        <img src="assets/icons/logo.svg" alt="">
+        <span>GreenBite</span>
+      </a>
+      <button class="hamburger" aria-label="Toggle Menu" aria-expanded="false">
+        <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <nav class="nav-links" id="menu">
+        <a href="./index.html">Home</a>
+        <a href="./recipes.html">Recipes</a>
+        <a href="./calculator.html">Calculator</a>
+        <a href="./workout.html">Workout</a>
+        <a href="./mindfulness.html">Mindfulness</a>
+        <a href="./contact.html" aria-current="page">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- section -->
+  <main class="section">
+    <div class="container shell">
+      <section class="panel">
+        <h1 class="reveal" style="margin:.25rem 0 0">Contact Us</h1>
+        <p class="lead reveal" style="margin:0 0 1rem">We’d love to hear your feedback and ideas.</p>
+
+        <form id="contact-form" novalidate>
+          <div class="row">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" type="text" placeholder="Your name" required>
+            </div>
+            <div class="fieldemail">
+              <label for="email">Email</label>
+              <input id="email" type="email" placeholder="you@example.com" required>
+            </div>
+          </div>
+
+          <div class="field" style="margin-top:.75rem">
+            <label for="subject">Subject</label>
+            <input id="subject" type="text" placeholder="What’s this about?" style="height:44px; line-height:44px">
+          </div>
+
+          <div class="field" style="margin-top:.75rem">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="Write your message…" required></textarea>
+          </div>
+
+          <div style="display:flex; gap:.75rem; align-items:center; margin-top:1rem; flex-wrap:wrap">
+            <button class="btn" type="submit">Send</button>
+            <button class="btn secondary" type="button" id="clear">Clear</button>
+            <small class="muted">We store your message locally so you can review later.</small>
+          </div>
+        </form>
+      </section>
+
+      <aside class="panel">
+        <h2 style="margin:.25rem 0 0">How to reach us</h2>
+        <p class="muted">Prefer email? Try <a href="mailto:hello@greenbite.example">hello@greenbite.example</a></p>
+        <hr style="border:0; border-top:1px solid #e2e8f0; margin:1rem 0">
+        <h3 style="margin:.25rem 0">Saved messages (local)</h3>
+        <div id="saved" class="muted" style="font-size:.95rem">No messages yet.</div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- section -->
+  <footer>
+    <div class="container footer-grid">
+      <small>© <span id="year"></span> GreenBite</small>
+      <small><a href="./contact.html">Contact</a></small>
+    </div>
+  </footer>
+
+  <!-- section -->
+  <div class="toast" aria-live="polite" aria-atomic="true"></div>
+  <script src="./utils.js"></script>
+  <script src="./scripts/contact.js"></script>
+</body>
+</html>

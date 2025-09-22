@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>GreenBite — Workout Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Generate a quick bodyweight or dumbbell workout plan.">
+  <link rel="icon" href="assets/icons/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    /* layout */
+    html,body{height:100%}
+    body{display:flex; min-height:100vh; flex-direction:column}
+    main{flex:1}
+
+    /* page */
+    .panel{background:var(--panel); border:1px solid #e2e8f0; border-radius:16px; padding:1rem; box-shadow:var(--shadow)}
+    .controls{display:grid; grid-template-columns:repeat(4,1fr); gap:.75rem}
+    @media (max-width: 980px){ .controls{grid-template-columns:1fr 1fr} }
+    @media (max-width: 560px){ .controls{grid-template-columns:1fr} }
+    .controls select, .controls button{padding:.65rem .8rem; border-radius:12px; border:1px solid #cbd5e1; outline:none}
+    .controls button.btn{border:none}
+    .muted{color:var(--muted)}
+    .hscroll{display:flex; gap:.75rem; overflow-x:auto; padding-bottom:.25rem; scroll-snap-type:x mandatory}
+    .ex-card{flex:0 0 280px; scroll-snap-align:start; background:#fff; border:1px solid #e2e8f0; border-radius:16px; box-shadow:var(--shadow); padding:.75rem; display:flex; flex-direction:column; gap:.5rem}
+    .tag{font-size:.75rem; background:#eef2ff; color:#3730a3; padding:.15rem .5rem; border-radius:999px; border:1px solid #c7d2fe}
+    .pill{font-size:.75rem; background:#ecfeff; color:#155e75; padding:.15rem .5rem; border-radius:999px; border:1px solid #a5f3fc}
+    .iconbox{height:160px; border:1px dashed #e2e8f0; border-radius:10px; display:grid; place-items:center; font-size:2rem; color:#94a3b8}
+  </style>
+</head>
+<body>
+  <!-- header -->
+  <header>
+    <div class="container nav" role="navigation" aria-label="Primary">
+      <a class="brand" href="./index.html">
+        <img src="assets/icons/logo.svg" alt="">
+        <span>GreenBite</span>
+      </a>
+      <button class="hamburger" aria-label="Toggle Menu" aria-expanded="false">
+        <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <nav class="nav-links" id="menu">
+        <a href="./index.html">Home</a>
+        <a href="./recipes.html">Recipes</a>
+        <a href="./calculator.html">Calculator</a>
+        <a href="./workout.html" aria-current="page">Workout</a>
+        <a href="./mindfulness.html">Mindfulness</a>
+        <a href="./contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- main -->
+  <main class="section">
+    <div class="container">
+      <h1 class="reveal">Workout Generator</h1>
+      <p class="lead reveal">Pick your level, focus, and equipment. Click <strong>Generate</strong>. Nothing shows until you do.</p>
+
+      <section class="panel reveal" aria-labelledby="controls-title">
+        <h2 id="controls-title" style="margin:.25rem 0 1rem">Your Preferences</h2>
+        <div class="controls">
+          <label><span class="muted">Level</span><br>
+            <select id="level">
+              <option value="beginner" selected>Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </label>
+          <label><span class="muted">Focus</span><br>
+            <select id="focus">
+              <option value="full">Full Body</option>
+              <option value="upper">Upper</option>
+              <option value="lower">Lower</option>
+              <option value="core">Core</option>
+            </select>
+          </label>
+          <label><span class="muted">Equipment</span><br>
+            <select id="equipment">
+              <option value="none" selected>None</option>
+              <option value="dumbbells">Dumbbells</option>
+              <option value="mat">Mat</option>
+            </select>
+          </label>
+          <label><span class="muted">Duration</span><br>
+            <select id="duration">
+              <option value="10">~10 min</option>
+              <option value="20" selected>~20 min</option>
+              <option value="30">~30 min</option>
+            </select>
+          </label>
+        </div>
+
+        <div style="display:flex; gap:.75rem; align-items:center; margin-top:1rem; flex-wrap:wrap">
+          <button id="generate" class="btn">Generate</button>
+          <button id="clear" class="btn secondary" type="button">Clear</button>
+          <small class="muted">Hint: press <kbd>Enter</kbd> here to regenerate.</small>
+        </div>
+      </section>
+
+      <section id="routineWrap" class="reveal" style="display:none; margin-top:1rem">
+        <h2 style="margin:.25rem 0">Your Routine</h2>
+        <p class="muted" id="routineMeta"></p>
+        <div id="routine" class="hscroll" aria-live="polite"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- footer -->
+  <footer>
+    <div class="container footer-grid">
+      <small>© <span id="year"></span> GreenBite</small>
+      <small><a href="./contact.html">Contact</a></small>
+    </div>
+  </footer>
+
+  <!-- scripts -->
+  <div class="toast" aria-live="polite" aria-atomic="true"></div>
+  <script src="./utils.js"></script>
+  <script src="./scripts/workout.js"></script>
+</body>
+</html>

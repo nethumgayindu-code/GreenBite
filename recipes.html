@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>GreenBite — Healthy Recipes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Browse healthy recipes with ingredients, steps, and nutrition.">
+  <link rel="icon" href="assets/icons/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header>
+    <div class="container nav" role="navigation" aria-label="Primary">
+      <a class="brand" href="./index.html">
+        <img src="assets/icons/logo.svg" alt="">
+        <span>GreenBite</span>
+      </a>
+
+      <button class="hamburger" aria-label="Toggle Menu" aria-expanded="false">
+        <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <nav class="nav-links" id="menu">
+        <a href="./index.html">Home</a>
+        <a href="./recipes.html" aria-current="page">Recipes</a>
+        <a href="./calculator.html">Calculator</a>
+        <a href="./workout.html">Workout</a>
+        <a href="./mindfulness.html">Mindfulness</a>
+        <a href="./contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <h1 class="reveal">Healthy Recipes</h1>
+      <p class="lead reveal">Search by name, filter by category, then click a card to see ingredients, steps, and nutrition.</p>
+
+      <!-- Toolbar -->
+      <div class="reveal" role="search" style="display:flex; gap:.5rem; flex-wrap:wrap; align-items:center; margin:.5rem 0 1rem">
+        <label class="sr-only" for="q">Search recipes</label>
+        <input id="q" type="search" placeholder="Search by name (e.g., oats, salad)…" autocomplete="off"
+               style="padding:.6rem .8rem; border-radius:12px; border:1px solid #cbd5e1; outline:none; flex:1 0 240px">
+        <label class="sr-only" for="cat">Filter by category</label>
+        <select id="cat" style="padding:.6rem .8rem; border-radius:12px; border:1px solid #cbd5e1; outline:none">
+          <option value="all">All categories</option>
+          <option>Breakfast</option>
+          <option>Lunch</option>
+          <option>Dinner</option>
+          <option>Snack</option>
+          <option>Vegan</option>
+          <option>Vegetarian</option>
+          <option>High-Protein</option>
+          <option>Low-Carb</option>
+        </select>
+        <button class="btn" id="clear">Clear</button>
+      </div>
+
+      <!-- Cards grid -->
+      <div id="grid" class="grid-3"></div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <small>© <span id="year"></span> GreenBite</small>
+      <small><a href="./contact.html">Contact</a></small>
+    </div>
+  </footer>
+
+  <!-- Accessible Modal -->
+  <div id="backdrop" class="modal-backdrop" aria-hidden="true"
+       style="position:fixed; inset:0; background:rgba(2,6,23,.48); display:none; align-items:center; justify-content:center; padding:1rem; z-index:60">
+    <div role="dialog" aria-modal="true" aria-labelledby="dlg-title" class="modal" tabindex="-1"
+         style="width:min(860px, 100%); background:#fff; border-radius:16px; box-shadow:var(--shadow); border:1px solid #e2e8f0; max-height:90vh; overflow:auto">
+      <header style="display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding:1rem; border-bottom:1px solid #e2e8f0">
+        <div>
+          <h2 id="dlg-title" style="margin:.25rem 0">Recipe</h2>
+          <small id="dlg-cats" class="lead"></small>
+        </div>
+        <button id="close" class="btn" style="background:#111827">Close</button>
+      </header>
+      <div class="body" style="padding:1rem">
+        <div class="grid" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; align-items:start">
+          <div>
+            <img id="dlg-img" alt="" style="width:100%; border-radius:12px; border:1px solid #e2e8f0">
+            <p id="dlg-desc" class="lead" style="margin:.5rem 0 0"></p>
+            <div class="tags" id="dlg-tags" style="display:flex; flex-wrap:wrap; gap:.35rem; margin-top:.4rem"></div>
+          </div>
+          <div>
+            <h3>Ingredients</h3>
+            <ul id="dlg-ings"></ul>
+            <h3>Steps</h3>
+            <ol id="dlg-steps"></ol>
+            <h3>Nutrition (per serving)</h3>
+            <table aria-describedby="tbl-caption" style="width:100%; border-collapse:collapse; margin-top:.5rem">
+              <caption id="tbl-caption" class="sr-only">Nutrition facts table</caption>
+              <thead>
+                <tr><th style="border:1px solid #e2e8f0; padding:.5rem; text-align:left; background:#f8fafc">Nutrient</th>
+                    <th style="border:1px solid #e2e8f0; padding:.5rem; text-align:left; background:#f8fafc">Amount</th></tr>
+              </thead>
+              <tbody id="dlg-nutrition"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <footer style="padding:1rem; border-top:1px solid #e2e8f0">
+        <small>Tip: Press <kbd>Esc</kbd> to close the recipe.</small>
+      </footer>
+    </div>
+  </div>
+
+  <div class="toast" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="./utils.js"></script>
+  <script src="./scripts/recipes.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>GreenBite — Mindfulness Timer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Relax with a countdown timer and calming chime.">
+  <link rel="icon" href="assets/icons/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    /* layout */
+    html,body{height:100%}
+    body{display:flex; min-height:100vh; flex-direction:column}
+    main{flex:1}
+
+    /* page */
+    .panel{background:var(--panel); border:1px solid #e2e8f0; border-radius:16px; padding:1rem; box-shadow:var(--shadow); text-align:center}
+    .timer-display{font-size:2.5rem; font-weight:700; margin:1rem 0}
+    .controls{display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap}
+    .controls input{padding:.6rem .8rem; border-radius:12px; border:1px solid #cbd5e1; width:100px; text-align:center}
+    .controls button{border:none}
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+  <!-- header -->
+  <header>
+    <div class="container nav" role="navigation" aria-label="Primary">
+      <a class="brand" href="./index.html">
+        <img src="assets/icons/logo.svg" alt="">
+        <span>GreenBite</span>
+      </a>
+      <button class="hamburger" aria-label="Toggle Menu" aria-expanded="false">
+        <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <nav class="nav-links" id="menu">
+        <a href="./index.html">Home</a>
+        <a href="./recipes.html">Recipes</a>
+        <a href="./calculator.html">Calculator</a>
+        <a href="./workout.html">Workout</a>
+        <a href="./mindfulness.html" aria-current="page">Mindfulness</a>
+        <a href="./contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- main -->
+  <main class="section">
+    <div class="container">
+      <h1 class="reveal">Mindfulness Timer</h1>
+      <p class="lead reveal">Pick minutes, start the countdown, and a soft chime will play when time is up.</p>
+
+      <section class="panel reveal">
+        <div class="timer-display" id="display">00:00</div>
+        <div class="controls">
+          <input type="number" id="minutes" min="1" max="60" value="5">
+          <button class="btn" id="start">Start</button>
+          <button class="btn secondary" id="reset">Reset</button>
+        </div>
+        <p class="muted" style="margin-top:.5rem">Tip: close your eyes and follow your breath while the timer runs.</p>
+      </section>
+    </div>
+  </main>
+
+  <!-- footer -->
+  <footer>
+    <div class="container footer-grid">
+      <small>© <span id="year"></span> GreenBite</small>
+      <small><a href="./contact.html">Contact</a></small>
+    </div>
+  </footer>
+
+  <!-- scripts -->
+  <div class="toast" aria-live="polite" aria-atomic="true"></div>
+  <audio id="chime" src="assets/audio/chime.mp3" preload="auto"></audio>
+  <script src="./utils.js"></script>
+  <script src="./scripts/mindfulness.js"></script>
+</body>
+</html>
